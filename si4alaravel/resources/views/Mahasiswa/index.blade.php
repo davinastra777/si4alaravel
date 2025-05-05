@@ -4,14 +4,14 @@
 
 <table>
     <tr>
-        <th>npm</th>
-        <th>nama</th>
-        <th>jk</th>
-        <th>tanggal_lahir</th>
-        <th>tempat_lahir</th>
-        <th>asal_sma</th>
-        <th>prodi_id</th>
-        <th>foto</th>
+        <th>NPM</th>
+        <th>Nama</th>
+        <th>JK</th>
+        <th>Tanggal lahir</th>
+        <th>Tempat Lahir</th>
+        <th>Asal SMA</th>
+        <th>Prodi ID</th>
+        <th>Foto</th>
     </tr>
 @foreach ($mahasiswa as $item)
     <tr>
