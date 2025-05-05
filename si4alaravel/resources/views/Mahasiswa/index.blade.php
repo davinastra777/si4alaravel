@@ -1,9 +1,9 @@
 @extends('layout.main')
 @section('content')
-<h1>Program Studi</h1>
-@foreach ($prodi as $item)
-{{$item->nama}} | {{
-    $item->singkatan}} | {{
+<h1>Mahasiswa</h1>
+@foreach ($mahasiswa as $item)
+{{$item->npm}} | {{
+    $item->nama}} | {{
     $item->fakultas->nama}}
     <br>
     @endforeach

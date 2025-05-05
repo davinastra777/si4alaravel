@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table-> string('npm', 11);
                 $table-> string('nama', 30);
-                $table-> enum('jk', ["L", "P"]);
+                $table-> enum('jk', ['L', 'P']);
                 $table-> date('tanggal_lahir');
                 $table-> string('tempat_lahir', 30);
                 $table-> string('asal_sma', 30);

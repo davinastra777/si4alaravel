@@ -12,7 +12,11 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        //
+         // panggil model fakultas menggunakan eloquent
+         $mahasiswa = mahasiswa::all(); // perintah SQL select * from fakultas
+        //  dd($mahasiswa); //dump and die
+         return view('mahasiswa.index')->with('mahasiswa', $mahasiswa);
+
     }
 
     /**
