@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prodi', function (Blueprint $table) {
+        Schema::create('fakultas', function (Blueprint $table) {
             $table->id();
+            $table->id(); //primary key, auto-incrementing, bigint
             $table->string('nama', 50);
-            $table->string('singkatan', 2);
-            $table->string('kaprodi', 30);
-            $table->string('sekretaris', 30);
-            $table->foreignId('fakultas_id')->constrained('fakultas')->onDelete('restrict')->onUpdate('restrict');
+            $table->string('singkatan', 5);
+            $table->string('dekan', 30);
+            $table->string('wakil_dekan', 30);
             $table->timestamps();
         });
     }
