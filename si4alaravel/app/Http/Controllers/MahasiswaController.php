@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
+use App\Models\Prodi;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
@@ -12,10 +13,8 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-         // panggil model fakultas menggunakan eloquent
-         $mahasiswa = mahasiswa::all(); // perintah SQL select * from fakultas
-        //  dd($mahasiswa); //dump and die
-         return view('mahasiswa.index')->with('mahasiswa', $mahasiswa);
+        $mahasiswa = Mahasiswa::all(); // Ambil semua data mahasiswa
+    return view('mahasiswa.index', compact('mahasiswa'));
 
     }
 
@@ -25,6 +24,8 @@ class MahasiswaController extends Controller
     public function create()
     {
         //
+        $prodi = Prodi::all(); // ambil semua data prodi
+        return view('mahasiswa.create',compact('prodi'));// mengirimkan data prodi ke view mahasiswa.create
     }
 
     /**
@@ -32,7 +33,34 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->validate(
+[
+            'npm' => 'required|unique:mahasiswa',
+            'nama' => 'required',
+            'jk' => 'required',
+            'tanggal_lahir' => 'required',
+            'tempat_lahir' => 'required',
+            'asal_sma' => 'required',
+            'prodi_id' => 'required',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        //upload foto
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $input['foto'] = $filename;
+        } else {
+            $input['foto'] = 'default.jpg'; // default image
+        }
+
+        //simpan data ke tabel mahasiswa
+        Mahasiswa::create($input);
+
+        //redirect ke route mahasiswa.index
+        return redirect()->route('mahasiswa.index')
+            ->with('success', 'Mahasiswa berhasil ditambahkan');
     }
 
     /**
@@ -66,4 +94,4 @@ class MahasiswaController extends Controller
     {
         //
     }
-}
+}   

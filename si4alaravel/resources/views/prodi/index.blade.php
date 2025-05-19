@@ -7,7 +7,7 @@
                 <!-- Default box -->
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title">List Prodi</h3>
+                    <h3 class="card-title">List Program Studi</h3>
                     <div class="card-tools">
                       <button
                         type="button"
@@ -29,6 +29,9 @@
                     </div>
                   </div>
                   <div class="card-body">
+                  <a href = "{{ route('prodi.create')}}" class="btn btn-primary">Tambah</a>
+                    <table class="table table-bordered table-striped">
+                
                     <table class="table table-bordered table-striped">
                       <thead>
                         <tr>

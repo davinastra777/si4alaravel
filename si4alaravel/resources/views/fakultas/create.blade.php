@@ -27,21 +27,21 @@
                         <input type="text" class="form-control" name="singkatan" value="{{ old('singkatan') }}">
                         @error('singkatan')
                         <div class="text-danger">{{ $message }}</div>
-                        @enderror>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="dekan" class="form-label">Nama Dekan</label>
                         <input type="text" class="form-control" name="dekan" value="{{ old('dekan') }}">
                         @error('dekan')
                         <div class="text-danger">{{ $message }}</div>
-                        @enderror>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="wakil_dekan" class="form-label">Nama Wakil Dekan</label>
                         <input type="text" class="form-control" name="wakil_dekan" value="{{ old('wakil_dekan') }}">
                         @error('wakil_dekan')
                         <div class="text-danger">{{ $message }}</div>
-                        @enderror>
+                        @enderror
                       </div>
                     </div>
                     <!--end::Body-->
