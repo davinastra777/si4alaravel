@@ -10,7 +10,7 @@
                   <div class="card-header"><div class="card-title">Tambah Mahasiswa</div></div>
                   <!--end::Header-->
                   <!--begin::Form-->
-                  <form action="{{route('mahasiswa.store')}}" method="POST" eynctype="multipart/form-data">
+                  <form action="{{route('mahasiswa.store')}}" method="POST" enctype="multipart/form-data">
                   @csrf
                     <!--begin::Body-->
                     <div class="card-body">
@@ -30,8 +30,8 @@
                       </div>
                       <div class="mb-3">
                         <label for="jk" class="form-label">Jenis Kelamin</label>
-                        <input type="radio" class="form-control" name="jk" value="L" {{ old('jk') == 'L' ? 'checked' : '' }}> Laki-laki 
-                        <input type="radio" class="form-control" name="jk" value="P" {{ old('jk') == 'P' ? 'checked' : '' }}> Perempuan
+                        <input type="radio"  name="jk" value="L" {{ old('jk') == 'L' ? 'checked' : '' }}> Laki-laki 
+                        <input type="radio"  name="jk" value="P" {{ old('jk') == 'P' ? 'checked' : '' }}> Perempuan
                         @error('jk')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -70,7 +70,7 @@
                       </div>
                       <div class="mb-3">
                         <label for="foto" class="form-label">Foto</label>
-                        <input type="file" class="form-control" name="foto">
+                        <input type="file" class="form-control" name="foto" value="{{ old('foto') }}">
                         @error('foto')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror

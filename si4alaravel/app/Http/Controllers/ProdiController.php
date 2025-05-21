@@ -13,8 +13,10 @@ class ProdiController extends Controller
      */
     public function index()
     {
-        $mahasiswa =   Mahasiswa::all(); // Ambil semua data mahasiswa
-    return view('mahasiswa.index', compact('mahasiswa'));
+        // panggil model prodi menggunakan eloquent
+        $prodi = Prodi::all();//perintah sql select * from prodi
+        //dd($prodi);
+        return view('prodi.index')->with('prodi', $prodi);
     }
 
     /**
@@ -32,7 +34,8 @@ class ProdiController extends Controller
     public function store(Request $request)
     {
         //validasi input
-        $input = $request->validate([
+        $input = $request->validate(
+[
                 'nama' => 'required|unique:prodi',
                 'singkatan' => 'required|max:5',
                 'kaprodi' => 'required',

@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Mahasiswa extends Model
 {
-    protected $table = 'mahasiswa';//nama tabel jika tidak sesuai dengan nama model
+    protected $table = 'mahasiswa'; //nama tabel
+    protected $fillable = [
+        'npm', 'nama', 'jk',
+        'tanggal_lahir', 'tempat_lahir',
+        'asal_sma', 
+        'prodi_id', 'foto'
+    ];
     public function prodi()
-{
-    return $this->belongsTo(Prodi::class);
-}
-
+    {
+        return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
+    }
 }
