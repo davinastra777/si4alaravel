@@ -842,6 +842,15 @@
     });
 </script>
 
+@session('success')
+<script type="text/javascript">
+    swal({
+      title: "Good job!",
+      text: "{{ session('success') }}",
+      icon: "success" 
+<script>
+@endsession
+});
 </body>
 </html>
   </body>

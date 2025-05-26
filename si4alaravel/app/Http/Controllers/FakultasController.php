@@ -76,9 +76,11 @@ class FakultasController extends Controller
      * @param  \App\Models\Fakultas  $fakultas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Fakultas $fakultas)
+    public function edit($fakultas)
     {
-        //
+        $fakultas = Fakultas::findorfail($fakultas);
+        //dd($fakultas);
+        return view('fakultas.edit', compact('fakultas'));
     }
 
     /**
@@ -99,8 +101,17 @@ class FakultasController extends Controller
      * @param  \App\Models\Fakultas  $fakultas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fakultas $fakultas)
+    public function destroy($fakultas)
     {
-        //
+        $fakultas = Fakultas::findorfail($fakultas);
+        //dd($fakultas);
+
+
+        //hapus data fakultas
+        $fakultas->delete();
+
+        //redirect ke route fakultas.index
+        return redirect()->route('fakultas.index')
+            ->with('success', 'Fakultas berhasil dihapus');
     }
 }

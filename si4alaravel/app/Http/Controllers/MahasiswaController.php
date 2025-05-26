@@ -106,8 +106,24 @@ class MahasiswaController extends Controller
      * @param  \App\Models\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mahasiswa $mahasiswa)
+    public function destroy($mahasiswa)
     {
-        //
+        $mahasiswa = Mahasiswa::findOrFail($mahasiswa);
+        //dd($mahasiswa);
+
+        //hapus foto jika ada
+        if ($mahasiswa->foto){
+            $fotopath = public_path('images/' . 
+            $mahasiswa->foto);
+            if (file_exists($fotopath)) {
+                unlink($fotopath); //hapus file foto
+            }
+        }
+
+        //hapus data mahasiswa
+        $mahasiswa->delete();
+
+        //redirect ke halaman mahasiswa.index
+        return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil dihapus!');
     }
 }
