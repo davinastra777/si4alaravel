@@ -97,8 +97,7 @@ class FakultasController extends Controller
         //validasi input
         $input = $request->validate(
             [
-                'nama' => 'required|
-                unique:fakultas',
+                'nama' => 'required',
                 'singkatan' => 'required|max:5',
                 'dekan' => 'required',
                 'wakil_dekan' => 'required',
