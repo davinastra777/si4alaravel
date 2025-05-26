@@ -90,9 +90,25 @@ class FakultasController extends Controller
      * @param  \App\Models\Fakultas  $fakultas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fakultas $fakultas)
+    public function update(Request $request, $fakultas)
     {
-        //
+        
+        $fakultas = Fakultas::findorfail($fakultas);
+        //validasi input
+        $input = $request->validate(
+            [
+                'nama' => 'required|
+                unique:fakultas',
+                'singkatan' => 'required|max:5',
+                'dekan' => 'required',
+                'wakil_dekan' => 'required',
+            ]);
+
+            //update data fakultas
+        $fakultas->update($input);
+        //redirect ke route fakultas.index
+        return redirect()->route('fakultas.index')
+            ->with('success', 'Fakultas berhasil diupdate');
     }
 
     /**
