@@ -21,7 +21,8 @@ class MataKuliahController extends Controller
      */
     public function create()
     {
-        //
+        $matakuliah = MataKuliah::all();
+        return view('matakuliah.create', compact('prodi'));
     }
 
     /**
@@ -29,16 +30,23 @@ class MataKuliahController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validasi input
+        $input = $request->validate([
+            'nama' => 'required|unique:matakuliah',
+            'kode_mk' => 'required|max:10',
+            'prodi_id' => 'required|exists:prodi,id',
+        ]);
+
+        MataKuliah::create($input);
+
+        return redirect()->route('matakuliah.index')
+            ->with('success', 'Mata Kuliah berhasil ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(MataKuliah $mataKuliah)
-    {
-        //
-    }
+    public function show(MataKuliah $mataKuliah) {}
 
     /**
      * Show the form for editing the specified resource.

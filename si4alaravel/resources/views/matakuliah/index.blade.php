@@ -29,25 +29,22 @@
                     </div>
                   </div>
                   <div class="card-body">
-                  <a href = "{{ route('fakultas.create')}}" class="btn btn-primary">Tambah</a>
+                  <a href = "{{ route('matakuliah.create')}}" class="btn btn-primary">Tambah</a>
                     <table class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Kode Matakuliah</th>
-                          <th>Nama MataKuliah</th>
+                          <th>Mata Kuliah</th>
                         </tr>
                       </thead>
                       <tbody>
                         @foreach ($matakuliah as $item)
                         <tr>
-                          <td>{{ $item->kode_mk}} </td>
                           <td>{{ $item->nama}} </td>
                           <td>{{ $item->id}}</td>
-                          <td>{{ $item->sesi->id ?? '-'}}</td>
                         <td>
-                        <a href="{{ route('fakultas.show', $item->id) }}" class="btn btn-info">Show</a>
-                            <a href="{{ route('fakultas.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('fakultas.destroy', $item->id) }}" method="POST" class="d-inline">
+                            <a href="{{ route('matakuliah.show', $item->id) }}" class="btn btn-info">Show</a>
+                            <a href="{{ route('matakuliah.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                            <form action="{{ route('matakuliah.destroy', $item->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger show_confirm" 

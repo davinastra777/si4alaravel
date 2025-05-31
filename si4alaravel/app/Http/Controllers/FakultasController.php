@@ -17,8 +17,7 @@ class FakultasController extends Controller
         // panggil model fakultas menggunakan eloquent
         $fakultas = Fakultas::all(); // perintah SQL select * from fakultas
         //dd($fakultas); //dump and die
-        return view('fakultas.index', compact
-        ('fakultas')); //selain compact bisa juga menggunakan with()
+        return view('fakultas.index', compact('fakultas')); //selain compact bisa juga menggunakan with()
     }
 
     /**
@@ -47,7 +46,8 @@ class FakultasController extends Controller
                 'singkatan' => 'required|max:5',
                 'dekan' => 'required',
                 'wakil_dekan' => 'required',
-            ]);
+            ]
+        );
 
         //simpan data ke tabel fakultas
         Fakultas::create($input);
@@ -65,8 +65,8 @@ class FakultasController extends Controller
      */
     public function show(Fakultas $fakultas)
     {
-        $fakultas = Fakultas::findorfail($fakultas);
-        //dd($fakultas); 
+        $fakultas = Fakultas::findOrFail($fakultas);
+        // dd($fakultas);
         return view('fakultas.show', compact('fakultas'));
     }
 
@@ -92,7 +92,7 @@ class FakultasController extends Controller
      */
     public function update(Request $request, $fakultas)
     {
-        
+
         $fakultas = Fakultas::findorfail($fakultas);
         //validasi input
         $input = $request->validate(
@@ -101,9 +101,10 @@ class FakultasController extends Controller
                 'singkatan' => 'required|max:5',
                 'dekan' => 'required',
                 'wakil_dekan' => 'required',
-            ]);
+            ]
+        );
 
-            //update data fakultas
+        //update data fakultas
         $fakultas->update($input);
         //redirect ke route fakultas.index
         return redirect()->route('fakultas.index')
