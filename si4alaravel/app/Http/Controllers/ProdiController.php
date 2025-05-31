@@ -14,7 +14,7 @@ class ProdiController extends Controller
     public function index()
     {
         // panggil model prodi menggunakan eloquent
-        $prodi = Prodi::all();//perintah sql select * from prodi
+        $prodi = Prodi::all(); //perintah sql select * from prodi
         //dd($prodi);
         return view('prodi.index')->with('prodi', $prodi);
     }
@@ -35,13 +35,14 @@ class ProdiController extends Controller
     {
         //validasi input
         $input = $request->validate(
-[
+            [
                 'nama' => 'required|unique:prodi',
                 'singkatan' => 'required|max:5',
                 'kaprodi' => 'required',
                 'sekretaris' => 'required',
                 'fakultas_id' => 'required',
-            ]);
+            ]
+        );
 
         //simpan data ke tabel fakultas
         Prodi::create($input);
@@ -76,13 +77,14 @@ class ProdiController extends Controller
     {
         //validasi input
         $input = $request->validate(
-[
-            'nama' => 'required',
-            'singkatan' => 'required|max:5',
-            'kaprodi' => 'required',
-            'sekretaris' => 'required',
-            'fakultas_id' => 'required',
-        ]);
+            [
+                'nama' => 'required',
+                'singkatan' => 'required|max:5',
+                'kaprodi' => 'required',
+                'sekretaris' => 'required',
+                'fakultas_id' => 'required',
+            ]
+        );
 
         //update data ke tabel prodi
         $prodi->update($input);

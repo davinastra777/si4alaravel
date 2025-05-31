@@ -15,10 +15,10 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-          // panggil model fakultas menggunakan eloquent
-          $mahasiswa = mahasiswa::all(); // perintah SQL select * from fakultas
+        // panggil model fakultas menggunakan eloquent
+        $mahasiswa = mahasiswa::all(); // perintah SQL select * from fakultas
         //   dd($mahasiswa); //dump and die
-          return view('mahasiswa.index')->with('mahasiswa', $mahasiswa);
+        return view('mahasiswa.index')->with('mahasiswa', $mahasiswa);
     }
 
     /**
@@ -58,7 +58,7 @@ class MahasiswaController extends Controller
             $input['foto'] = $filename;
         }
         // jika tidak ada file foto, maka set foto ke null
-    
+
         // simpan data ke tabel mahasiswa
         Mahasiswa::create($input);
         // redirect ke halaman mahasiswa.index
@@ -112,9 +112,9 @@ class MahasiswaController extends Controller
         //dd($mahasiswa);
 
         //hapus foto jika ada
-        if ($mahasiswa->foto){
-            $fotopath = public_path('images/' . 
-            $mahasiswa->foto);
+        if ($mahasiswa->foto) {
+            $fotopath = public_path('images/' .
+                $mahasiswa->foto);
             if (file_exists($fotopath)) {
                 unlink($fotopath); //hapus file foto
             }
