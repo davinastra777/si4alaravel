@@ -16,9 +16,9 @@ class Prodi extends Model
     {
         return $this->hasMany(Mahasiswa::class, 'prodi_id', 'id');
     }
-    public function mataKuliah()
+    public function matakuliah()
     {
-        return $this->hasMany(MataKuliah::class, 'prodi_id', 'id');
+        return $this->hasMany(MataKuliah::class);
     }
 
     protected $fillable = [

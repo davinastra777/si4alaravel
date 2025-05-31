@@ -40,7 +40,6 @@
                         @foreach ($matakuliah as $item)
                         <tr>
                           <td>{{ $item->nama}} </td>
-                          <td>{{ $item->id}}</td>
                         <td>
                             <a href="{{ route('matakuliah.show', $item->id) }}" class="btn btn-info">Show</a>
                             <a href="{{ route('matakuliah.edit', $item->id) }}" class="btn btn-warning">Edit</a>

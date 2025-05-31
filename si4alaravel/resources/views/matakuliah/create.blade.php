@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Mata Kuliah')
+@section('title', 'matakuliah')
 @section('content')
     <div class="container-fluid">
         <!--begin::Row-->
@@ -31,17 +31,22 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="prodi_id" class="form-label">Program Studi</label>
-                                <select class="form-control" name="prodi_id" id="prodi_id">
-                                    <option value="">-- Pilih Program Studi --</option>
-                                    @foreach($prodi as $item)
-                                        <option value="{{ $item->id }}" {{ old('prodi_id') == $item->id ? 'selected' : '' }}>{{ $item->nama }}</option>
-                                    @endforeach
-                                </select>
-                                @error('prodi_id')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+    <label for="prodi_id" class="form-label">Prodi</label>
+    
+    <select class="form-control" name="prodi_id" id="prodi_id">
+        <option disabled selected>-- Pilih Prodi --</option>
+
+        @foreach($prodi as $item)
+            <option value="{{ $item->id }}" {{ old('prodi_id') == $item->id ? 'selected' : '' }}>
+                {{ $item->nama }}
+            </option>
+        @endforeach
+    </select>
+    
+    @error('prodi_id')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
                         </div>
                         <!--end::Body-->
                         <!--begin::Footer-->

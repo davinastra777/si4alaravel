@@ -30,10 +30,12 @@ class SesiController extends Controller
             ->with('success', 'Sesi berhasil ditambahkan');
     }
 
-    public function show(Sesi $sesi)
+    public function show($sesi)
     {
+        $sesi = Sesi::findOrFail($sesi);
         return view('sesi.show', compact('sesi'));
     }
+
 
     public function edit(Sesi $sesi)
     {

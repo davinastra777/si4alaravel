@@ -13,7 +13,7 @@ class Jadwal extends Model
         'kode_smt',
         'kelas',
         'sesi_id',
-        'mata_kuliah_id',
+        'matakuliah_id',
     ];
 
     public function sesi()
