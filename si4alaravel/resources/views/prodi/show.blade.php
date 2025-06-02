@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'mahasiswa')
+@section('title', 'prodi')
 @section('content')
 <!--begin::Row-->
 <div class="row">
@@ -7,7 +7,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">List Mahasiswa</h3>
+          <h3 class="card-title">List Prodi</h3>
           <div class="card-tools">
             <button
               type="button"
@@ -29,38 +29,27 @@
           </div>
         </div>
         <div class="card-body">
-            <table class="table">
-                <tr>
-                    <tr>
-                        <td colspan="2">
-                            <img src="{{asset('images/'.$mahasiswa->foto)}}" class="img-fluid">
-                        </td>
-                    </tr>
-                </tr>
+        <table class="table">
                 <tr>
                     <th>Nama</th>
-                    <td>{{ $mahasiswa->nama }}
+                    <td>{{ $prodi->nama }}
                 </tr>
                 <tr>
-                    <th>NPM</th>
-                    <td>{{ $mahasiswa->npm }}
+                    <th>Singkatan</th>
+                    <td>{{ $prodi->singkatan }}
                 </tr>
                 <tr>
-                    <th>Tempat, Tanggal Lahir</th>
-                    <td>{{ $mahasiswa->tempat_lahir }}, {{ $mahasiswa->tanggal_lahir }}</td>
+                    <th>Kaprodi</th>
+                    <td>{{ $prodi->kaprodi}}</td>
                 </tr>
                 <tr>
-                    <th>Asal SMA</th>
-                    <td>{{ $mahasiswa->asal_sma }}
-                </tr>
-                <tr>
-                    <th>Program Studi</th>
-                    <td>{{ $mahasiswa->prodi->nama }}
+                    <th>Sekretaris</th>
+                    <td>{{ $prodi->sekretaris}}</td>
                 </tr>
                 <tr>
                     <th>Fakultas</th>
-                    <td>{{ $mahasiswa->prodi->fakultas->nama }}
-                </tr>                
+                    <td>{{ $prodi->fakultas->nama }}</td>
+                </tr>
             </table>
         </div>
       </div>

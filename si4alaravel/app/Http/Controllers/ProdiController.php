@@ -55,9 +55,11 @@ class ProdiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Prodi $prodi)
+    public function show($prodi)
     {
-        //
+        $prodi = prodi::findOrFail($prodi);
+        //dd($matakuliah);
+        return view('prodi.show', compact('prodi'));
     }
 
     /**

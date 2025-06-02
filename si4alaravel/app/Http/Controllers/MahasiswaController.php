@@ -77,6 +77,7 @@ class MahasiswaController extends Controller
         return view('mahasiswa.show', compact('mahasiswa'));
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
