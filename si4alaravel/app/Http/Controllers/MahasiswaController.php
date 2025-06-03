@@ -1,130 +1,127 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
-
+ 
 use App\Models\Mahasiswa;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
-
+ 
 class MahasiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        // panggil model fakultas menggunakan eloquent
-        $mahasiswa = mahasiswa::all(); // perintah SQL select * from fakultas
-        //   dd($mahasiswa); //dump and die
-        return view('mahasiswa.index')->with('mahasiswa', $mahasiswa);
+        $mahasiswa = Mahasiswa::all(); // Ambil semua data mahasiswa
+        return view('mahasiswa.index', compact('mahasiswa'));
+ 
     }
-
+ 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $prodi = Prodi::all();
-        return view('mahasiswa.create', compact('prodi'));
+        //
+        $prodi = Prodi::all(); // ambil semua data prodi
+        return view('mahasiswa.create',compact('prodi'));// mengirimkan data prodi ke view mahasiswa.create
     }
-
+ 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // validasi input
-        $input = $request->validate([
+        $input = $request->validate(
+[
             'npm' => 'required|unique:mahasiswa',
-            'nama' => 'required|unique:mahasiswa',
+            'nama' => 'required',
             'jk' => 'required',
-            'tanggal_lahir' => 'required|date',
+            'tanggal_lahir' => 'required',
             'tempat_lahir' => 'required',
             'asal_sma' => 'required',
-            'prodi_id' => 'required|exists:prodi,id',
-            'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'prodi_id' => 'required',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+ 
+        //upload foto
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('images'), $filename);
             $input['foto'] = $filename;
+        } else {
+            $input['foto'] = 'default.jpg'; // default image
         }
-        // jika tidak ada file foto, maka set foto ke null
-
-        // simpan data ke tabel mahasiswa
+ 
+        //simpan data ke tabel mahasiswa
         Mahasiswa::create($input);
-        // redirect ke halaman mahasiswa.index
-        return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil ditambahkan!');
+ 
+        //redirect ke route mahasiswa.index
+        return redirect()->route('mahasiswa.index')
+            ->with('success', 'Mahasiswa berhasil ditambahkan');
     }
-
+ 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Models\Mahasiswa  $mahasiswa
-     * @return \Illuminate\Http\Response
      */
     public function show(Mahasiswa $mahasiswa)
     {
         //dd($mahasiswa);
         return view('mahasiswa.show', compact('mahasiswa'));
     }
-
-
+ 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Mahasiswa  $mahasiswa
-     * @return \Illuminate\Http\Response
      */
     public function edit(Mahasiswa $mahasiswa)
     {
-        //
+        //dd($mahasiswa);
+        $prodi = Prodi::all(); // ambil semua data prodi
+        return view('mahasiswa.edit', compact('mahasiswa', 'prodi')); // mengirimkan data mahasiswa dan prodi ke view mahasiswa.edit
     }
-
+ 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Mahasiswa  $mahasiswa
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        //
-    }
+        $input = $request->validate(
+            [
+                'npm' => 'required|unique:mahasiswa,npm,' . $mahasiswa->id,
+                'nama' => 'required',
+                'jk' => 'required',
+                'tanggal_lahir' => 'required',
+                'tempat_lahir' => 'required',
+                'asal_sma' => 'required',
+                'prodi_id' => 'required',
 
+            ]);
+            
+            $mahasiswa->update($input);
+
+            return redirect()->route('mahasiswa.index')
+                ->with('success', 'Mahasiswa berhasil diupdate');
+    }
+ 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Mahasiswa  $mahasiswa
-     * @return \Illuminate\Http\Response
      */
     public function destroy($mahasiswa)
     {
-        $mahasiswa = Mahasiswa::findOrFail($mahasiswa);
+        $mahasiswa = Mahasiswa ::findOrFail($mahasiswa);
         //dd($mahasiswa);
-
         //hapus foto jika ada
-        if ($mahasiswa->foto) {
-            $fotopath = public_path('images/' .
-                $mahasiswa->foto);
-            if (file_exists($fotopath)) {
-                unlink($fotopath); //hapus file foto
+        if($mahasiswa->foto){
+            $fotoPath = public_path('images/', $mahasiswa->foto);
+            if (file_exists($fotoPath)){
+                unlink(($fotoPath)); //hapus file foto
             }
         }
-
-        //hapus data mahasiswa
-        $mahasiswa->delete();
-
-        //redirect ke halaman mahasiswa.index
-        return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil dihapus!');
+        //hapus data Mahasiswa
+        $mahasiswa -> delete();
+        //redirect ke route mahasiswa index
+        return redirect()->route('mahasiswa.index')->with('success','Mahasiswa berhasil dihapus');
     }
 }
