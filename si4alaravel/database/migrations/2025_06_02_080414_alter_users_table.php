@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->enum('role', ['admin', 'dosen', 'mahasiswa'])
-                ->default('mahasiswa')
-                ->after('email');
+                  ->default('mahasiswa')
+                  ->after('email')
+                  ->comment('Role pengguna: admin, dosen, atau mahasiswa');
         });
     }
 
@@ -27,4 +28,5 @@ return new class extends Migration
             //
         });
     }
+    
 };

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jadwal;
-use App\Models\MataKuliah;
+use App\Models\Matakuliah;
 use App\Models\Sesi;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class JadwalController extends Controller
@@ -23,10 +24,10 @@ class JadwalController extends Controller
      */
     public function create()
     {
-        $jadwal = Jadwal::all();
-        $matakuliah = MataKuliah::all();
+        $matakuliah = matakuliah::all();
         $sesi = Sesi::all();
-        return view('jadwal.create', compact('jadwal', 'matakuliah', 'sesi'));
+        $users = User::where('role', 'dosen')->get();
+        return view('jadwal.create',compact('matakuliah', 'sesi', 'users'));
     }
 
     /**
@@ -34,75 +35,79 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'tahun_akademik' => 'required',
-            'kode_smt' => 'required',
-            'kelas' => 'required',
-            'sesi_id' => 'required',
-            'matakuliah_id' => 'required',
-        ]);
+         $input = $request->validate(
+            [
+                'tahun_akademik' => 'required',
+                'kode_smt' => 'required',
+                'kelas' => 'required',
+                'matakuliah_id' => 'required',
+                'sesi_id' => 'required',
+                'dosen_id' => 'required'
+            ]);
 
-        Jadwal::create([
-            'tahun_akademik' => $request->tahun_akademik,
-            'kode_smt' => $request->kode_smt,
-            'kelas' => $request->kelas,
-            'sesi_id' => $request->sesi_id,
-            'matakuliah_id' => $request->matakuliah_id,
-        ]);
+        //simpan data ke tabel fakultas
+        jadwal::create($input);
 
-        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil ditambahkan');
+        //redirect ke route fakultas.index
+        return redirect()->route('jadwal.index')
+            ->with('success', 'Jadwal berhasil ditambahkan');
+
     }
-
 
     /**
      * Display the specified resource.
      */
-    public function show(Jadwal $jadwal)
+    public function show( $jadwal)
     {
-
+        $jadwal = jadwal::findOrFail($jadwal);
         return view('jadwal.show', compact('jadwal'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-
-    public function edit(Jadwal $jadwal)
+    public function edit(jadwal $jadwal)
     {
-        $matakuliah = MataKuliah::all();
+        $matakuliah = Matakuliah::all();
         $sesi = Sesi::all();
-        return view('jadwal.edit', compact('jadwal', 'matakuliah', 'sesi'));
+        $users = User::where('role', 'dosen')->get(); 
+        return view('jadwal.edit', compact('jadwal', 'matakuliah', 'sesi', 'users'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Jadwal $jadwal)
+    public function update(Request $request, jadwal $jadwal)
     {
-        $request->validate([
-            'tahun_akademik' => 'required',
-            'kode_smt' => 'required',
-            'kelas' => 'required',
-            'sesi_id' => 'required',
-            'matakuliah_id' => 'required',
-        ]);
+        $input = $request->validate(
+            [
+                'tahun_akademik' => 'required',
+                'kode_smt' => 'required',
+                'kelas' => 'required',
+                'matakuliah_id' => 'required',
+                'sesi_id' => 'required',
+                'dosen_id' => 'required'
+            ]);
 
-        $jadwal->update([
-            'tahun_akademik' => $request->tahun_akademik,
-            'kode_smt' => $request->kode_smt,
-            'kelas' => $request->kelas,
-            'sesi_id' => $request->sesi_id,
-            'matakuliah_id' => $request->matakuliah_id,
-        ]);
+        //update data ke tabel jadwal
+        $jadwal->update($input);
 
-        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil diupdate');
+        //redirect ke route jadwal.index
+        return redirect()->route('jadwal.index')
+            ->with('success', 'Jadwal berhasil diperbarui');  
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Jadwal $jadwal)
+    public function destroy( $jadwal)
     {
-        //
+        $jadwal = Jadwal::findOrFail($jadwal);
+        //hapus data jadwal
+        $jadwal->delete();
+
+        //redirect ke route jadwal.index
+        return redirect()->route('jadwal.index')
+            ->with('success', 'Jadwal berhasil dihapus');
     }
 }
