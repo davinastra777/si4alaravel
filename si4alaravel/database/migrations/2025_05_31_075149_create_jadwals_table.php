@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jadwal', function (Blueprint $table) {
-            $table->id();
+            Schema::create('jadwal', function (Blueprint $table) { 
             $table->string('tahun_akademik', 10);
-            $table->string('kode_smt', 10);
+            $table->enum('kode_smt', allowed: ['Gasal', 'Genap']);
             $table->string('kelas', 10);
             $table->foreignId('sesi_id')->constrained('sesi')->onDelete('restrict')->onUpdate('restrict');
             $table->foreignId('matakuliah_id')->constrained('matakuliah')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreignId('dosen_id')->constrained('users')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
         });
     }
