@@ -218,7 +218,7 @@
                     alt="User Image"
                   />
                   <p>
-                    {{ Auth::user()->name}} - Database Administrator
+                    {{ Auth::user()->name}} - {{ strtoupper(Auth::user()->role)}} - Database Administrator
                     <small>Member since Nov. 2023</small>
                   </p>
                 </li>
